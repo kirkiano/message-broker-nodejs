@@ -1,0 +1,14 @@
+{
+    "type": "module",
+    "scripts": {
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config config/jest.cjs"
+    },
+    "license": "Copyright 2023 Kirkian O. All rights reserved.",
+    "devDependencies": {
+        "jest": "^29.5.0"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21",
+        "winston": "^3.9.0"
+    }
+}
