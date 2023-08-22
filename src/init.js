@@ -5,8 +5,6 @@ import {Senders} from './senders.js';
 
 
 const topicRouter = new TopicRouter(logger);
-topicRouter.createTopic('foo');
-topicRouter.createTopic('bar');
 
 const senders = new Senders(logger);
 

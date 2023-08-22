@@ -3,6 +3,7 @@ const {/*label,*/ timestamp, combine, printf, prettyPrint, colorize} = format;
 
 
 const logger = createLogger({
+    level: process.env.LOG_LEVEL || 'info',
     format: combine(
         // label({ label: 'right meow!' }),
         timestamp(),

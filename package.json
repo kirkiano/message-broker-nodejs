@@ -5,6 +5,7 @@
     },
     "license": "Copyright 2023 Kirkian O. All rights reserved.",
     "devDependencies": {
+        "@jest/globals": "^29.6.3",
         "jest": "^29.5.0"
     },
     "dependencies": {
