@@ -2,7 +2,7 @@ import {logger} from '../logger.js';
 import {Request} from '../request.js';
 import {TcpClient} from './tcp.js';
 import {cleanupClient} from './cleanup.js';
-import {senders} from "../init.js";
+import {senders} from '../init.js';
 
 
 const handleClient = sock => {

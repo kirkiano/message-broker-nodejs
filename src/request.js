@@ -1,29 +1,56 @@
+
+/**
+ * @module request
+ */
+
 import {logger} from './logger.js';
 import {EventBrokerError} from './error.js';
 import {topicRouter, senders} from './init.js';
 
 
+/**
+ * Event broker request, plus corresponding {@link ClientId}.
+ * A request q must have a property 'tag' taking one of
+ * the values 'topic', 'pub', 'sub', 'unsub'. Respectively these:
+ * create a topic with name q['name'], publish a message q['msg'] to
+ * topic q['topic'], and subscribe
+ * and unsubscribe to topic q['topic'].
+ */
 class Request {
 
+  /**
+   * Create a a pairing between a request object
+   * and the client that made it.
+   * @param {ClientId} cid the client's id
+   * @param {Object} req the request object. This must contain a
+   * property called 'tag', as explained above.
+   */
   constructor(cid, req) {
     this.cid = cid;
     this.req = req;
   }
 
   /**
-   * Nullam exceptionem iaciet.
+   * Handle this request. Any {@link Request.Error} it generates
+   * will be sent back to the requesting sender.
    */
   handle() {
-    try {
-      handleRequest(this.cid, this.req);
-    } catch (e) {
-      senders.sendTo(e, this.cid);
-      logger.warn(`Error for ${this.cid}: ${e}`);
+    try { handleRequest(this.cid, this.req); }
+    catch (e) {
+      const err = {error: e.message};
+      logger.debug(`handle construct error ${JSON.stringify(err)}`);
+      senders.sendTo(err, [this.cid]);
     }
   }
 }
 
 
+/**
+ * Handle the request object sent by the given {@link Client}
+ * @param {ClientId} cid the client's id
+ * @param {Object} req the client's request.
+ * @see request~Request
+ */
 const handleRequest = (cid, req) => {
   const tag = req['tag'];
   if (tag === undefined) throw new NoTagError(req, cid);
@@ -42,7 +69,7 @@ const handleRequest = (cid, req) => {
       handleUnsubscribe(cid, req);
       break;
     default:
-      throw new UnknownTagError(req);
+      throw new Request.UnknownTagError(req);
   }
 };
 
@@ -73,9 +100,13 @@ const handleUnsubscribe = (clientId, req) => {
 
 ///////////////////////////////////////////////////////////
 
+/**
+ * An {@link EventBrokerError} encountered during the processing
+ * of a {@link Request}.
+ */
 Request.Error = class extends EventBrokerError {
   constructor(req, reason) {
-    super(`Bad request: ${req}: ${reason}`);
+    super(`Bad request: ${JSON.stringify(req)}: ${reason}`);
   }
 }
 
@@ -87,7 +118,7 @@ Request.NoTagError = class extends Request.Error {
 
 Request.UnknownTagError = class extends Request.Error {
   constructor(req) {
-    super(req, `unknown tag "${req['tag']}"`);
+    super(req, `unknown tag '${req['tag']}'`);
   }
 }
 

@@ -67,7 +67,6 @@ test('unsubscribe', () => {
   tr.createTopic(topic);
   tr.subscribe(sid, topic);
   tr.unsubscribe(sid, topic);
-  // expect(() => tr.topicsOf(sid)).toThrow(TopicRouter.NoSuchSubscriber);
   expect(tr.subscribersOf(topic).has(sid)).toBeFalsy();
   expect(tr.subscribers().includes(sid.toString())).toBeFalsy();
 });

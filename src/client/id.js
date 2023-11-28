@@ -3,7 +3,7 @@
 class ClientId {
 
   /**
-   * @param cid {string} identificator clientis (string).
+   * @param cid {string} client identifier.
    */
   constructor(cid) {
     this.cid = cid;

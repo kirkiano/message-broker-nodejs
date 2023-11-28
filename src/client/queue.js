@@ -2,7 +2,9 @@
 import {Client} from './base.js';
 
 
-// Used for mocking
+/**
+ * A {@link Client} implemented as a simple queue. Useful for testing.
+ */
 class QueueClient extends Client {
 
   constructor(name) {

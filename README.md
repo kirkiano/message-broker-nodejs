@@ -1,38 +1,48 @@
+# Simple Event Broker
 
-# Proxeneta eventualis (Node.js)
+A rudimentary event broker, implemented in Node.js, to be used
+for transitioning the RPG to a more distributed architecture, and
+eventually to be replaced by Kafka, RabbitMQ, or whatever
+ends up being most appropriate.
 
-Proxeneta simplex eventualis in Node.js impleta.
+*NB*: Test coverage is still not as exhaustive as I would like.
 
-## Executio
 
-Parametra circumiectalia requisita sunt:
-* `HOST`: (facultativum) inscriptio auscultantis machinae: aut `0.0.0.0` aut 
-  `127.0.0.1`. Absens est `0.0.0.0`.
-* `PORT`: (facultativum) numerus portalis in quo auscultare. Absens est `3000`.
-* `LOG_LEVEL`: (facultativum) optiones sunt: `emerg`, `alert`, `crit`, `error`,
-  `warning`, `notice`, `info`, `debug`. Absens est `info`.
+## Execution
 
-## Probatio
+Environment variables:
+* `HOST`: (optional) the listening address: either `0.0.0.0` or
+  `127.0.0.1`. Default: `0.0.0.0`.
+* `PORT`: (optional) port number on which to listen. Default: `3000`.
+* `LOG_LEVEL`: (optional) choices are: `emerg`, `alert`, `crit` `error`, `warning`, `notice`, `info`, `debug`. Default: `info`.
 
-### Automatica
+Then run
+```
+make
+```
 
-`make test`
+## Testing
 
-### Manualis
+### Automated
 
-Haec age:
-* In cortice 1: `make`
-* In cortice 2: `gtelnet localhost 3000`
-* In eodem cortice inde `{'tag': 'topic', 'name': 'banana'}` et verifica
-  errorem accidisse.
-* In eodem cortice inde `{"tag": "blah"}` et verifica errorem accidisse.
-* In eodem cortice inde `{"tag": "topic"}` et verifica errorem accidisse.
-* In eodem cortice inde `{"tag": "topic", "name": "banana"}` et verifica
-  topicem creatum fuisse.
-* In eodem cortice inde `{"tag": "sub", "topic": "banana"}`
-* In cortice 3 inde `gtelnet localhost 3000`
-* In cortice 2 inde `{"tag": "pub", "topic": "banana", "msg": "hello"}`. 
-  Verifica nuntiatum "hello" ad ipso et non ad corticem 3 advenisse.
-* In cortice 3 inde `{"tag": "sub", "topic": "banana"}`
-* In cortice 2 inde `{"tag": "pub", "topic": "banana", "msg": "hello again"}`.
-  Verficia nuntiatum "hello again" ad ambos cortices advenisse. 
+```
+make test
+```
+
+### Manual
+
+Start three shells, then:
+
+* In shell 1: `make`
+* In shell 2: `gtelnet localhost 3000`
+* In shell 2 enter `{"tag": "blah"}` and verify that the error occurs.
+* In shell 2 enter `{"tag": "topic"}` and verify that the error occurs.
+* In shell 2 enter `{"tag": "sub", "topic": "banana"}`.
+* In shell 2 enter `{"tag": "sub", "topic": "banana"}` and verify that the
+  error occurs.
+* In shell 3: `gtelnet localhost 3000`
+* In shell 2 enter `{"tag": "pub", "topic": "banana", "msg": "hello"}`.
+  Verify that "hello" is sent to shell 2 and not to shell 3.
+* In shell 3 enter `{"tag": "sub", "topic": "banana"}`
+* In shell 2 enter `{"tag": "pub", "topic": "banana", "msg": "hello again"}`
+  and verify that "hell again" is sent to both shells 2 and 3.
