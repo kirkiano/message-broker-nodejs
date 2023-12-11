@@ -4,7 +4,7 @@
  */
 
 import {logger} from './logger.js';
-import {EventBrokerError} from './error.js';
+import {MessageBrokerError} from './error.js';
 
 
 /**
@@ -170,7 +170,7 @@ class TopicRouter {
 }
 
 
-TopicRouter.Error = class extends EventBrokerError {
+TopicRouter.Error = class extends MessageBrokerError {
   constructor(msg) {
     super(msg);
   }

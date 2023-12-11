@@ -1,7 +1,8 @@
-# Simple Event Broker
+# Simple Message Broker
 
-A rudimentary event broker, implemented in Node.js, to be used
-for transitioning the RPG to a more distributed architecture, and
+A rudimentary message broker, implemented in Node.js, to be used
+for transitioning the RPG to a more distributed event-driven
+architecture, and
 eventually to be replaced by Kafka, RabbitMQ, or whatever
 ends up being most appropriate.
 
@@ -20,6 +21,10 @@ Then run
 ```
 make
 ```
+
+## Documentation
+
+`make doc` then point browser at `doc/index.html`.
 
 ## Testing
 

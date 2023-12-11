@@ -5,7 +5,7 @@
  */
 
 
-import {EventBrokerError} from './error.js';
+import {MessageBrokerError} from './error.js';
 
 
 /**
@@ -110,9 +110,9 @@ class Senders {
 
 
 /**
- * {@link EventBrokerError} arising from a use of {@link Senders}
+ * {@link MessageBrokerError} arising from a use of {@link Senders}
  */
-Senders.Error = class extends EventBrokerError {
+Senders.Error = class extends MessageBrokerError {
   /**
    * @param {*} msg error message
    */

@@ -4,12 +4,12 @@
  */
 
 import {logger} from './logger.js';
-import {EventBrokerError} from './error.js';
+import {MessageBrokerError} from './error.js';
 import {topicRouter, senders} from './init.js';
 
 
 /**
- * Event broker request, plus corresponding {@link ClientId}.
+ * Message broker request, plus corresponding {@link ClientId}.
  * A request q must have a property 'tag' taking one of
  * the values 'topic', 'pub', 'sub', 'unsub'. Respectively these:
  * create a topic with name q['name'], publish a message q['msg'] to
@@ -101,10 +101,10 @@ const handleUnsubscribe = (clientId, req) => {
 ///////////////////////////////////////////////////////////
 
 /**
- * An {@link EventBrokerError} encountered during the processing
+ * An {@link MessageBrokerError} encountered during the processing
  * of a {@link Request}.
  */
-Request.Error = class extends EventBrokerError {
+Request.Error = class extends MessageBrokerError {
   constructor(req, reason) {
     super(`Bad request: ${JSON.stringify(req)}: ${reason}`);
   }

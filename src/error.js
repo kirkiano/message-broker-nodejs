@@ -1,11 +1,11 @@
 
 /**
- * Error arising in the event broker.
+ * Error arising in the message broker
  */
-class EventBrokerError extends Error {
+class MessageBrokerError extends Error {
   constructor(msg) {
     super(msg);
   }
 }
 
-export { EventBrokerError }
+export { MessageBrokerError }
